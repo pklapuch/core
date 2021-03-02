@@ -28,6 +28,11 @@ public protocol Coordinator: AnyObject {
     var router: Router & RouterWindow { get }
     
     /**
+     @brief root interactor of coordinator (if any)
+     */
+    var rootInteractor: AnyObject? { get }
+    
+    /**
      @brief check if coordinator needs to react to this event or event should be passed on down the stack
      @param from - controller from which navigation started
      @param to - current top of navigation stack
@@ -48,6 +53,8 @@ public protocol Coordinator: AnyObject {
 }
 
 extension Coordinator {
+    
+    public var rootInteractor: AnyObject? { return nil }
     
     public func currentCoordinatorStack() -> [Coordinator] {
         

@@ -20,7 +20,12 @@ public class CoordinatorStore {
         return coordinator
     }
     
-    public func get(coordinatorWithClassType classType: AnyClass) -> Coordinator? {
+    public func getCoordinator<T: Coordinator>(_ type: T.Type) -> T? {
+        
+        return get(coordinatorWithClassType: type) as? T
+    }
+    
+    private func get(coordinatorWithClassType classType: AnyClass) -> Coordinator? {
         
         let className = NSStringFromClass(classType)
         
