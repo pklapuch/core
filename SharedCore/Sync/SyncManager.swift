@@ -75,17 +75,12 @@ public class SyncManager {
         }
     }
     
-    public func enable() -> AnyPublisher<Void, Never> {
+    public func enable() {
      
-        return Future<Void, Never> { promise in
-         
-            self.queue.async {
-                
-                self.enabled = true
-                self.updateState()
-                promise(.success(()))
-            }
-        }.erased
+        enabled = true
+        queue.async {
+            self.updateState()
+        }
     }
     
     public func isRunning(block:@escaping (Bool) -> Void) {
@@ -123,7 +118,7 @@ public class SyncManager {
         
         if instantState.isDone && scheduledState.isDone {
             
-            SharedCoreConfig.log?.scLog(message: "sync manager is idle (no active or queud sync", type: .debug)
+            SharedCoreConfig.log?.scLog(message: "sync manager is idle (no active or queud sync)", type: .debug)
         }
         
         if onAllActivitiesStopped != nil && instantState.isDone && scheduledState.isDone {
